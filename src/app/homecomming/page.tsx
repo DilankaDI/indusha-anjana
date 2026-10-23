@@ -1,184 +1,436 @@
-import { CalendarDays, MapPin } from "lucide-react";
+"use client";
+
+import { useEffect, useState } from "react";
+import {
+  ArrowUpRight,
+  CalendarDays,
+  Clock3,
+  Heart,
+  MapPin,
+  Sparkles,
+} from "lucide-react";
+
 import Reveal from "@/components/ui/Reveal";
-import Orn from "@/components/ui/Orn";
 import { createCalendarEvent, createCalendarUrl } from "@/lib/calendar";
+import { wedding } from "@/lib/wedding";
+
+const homecoming = {
+  dateISO: "2026-12-06T16:00:00+05:30",
+  dateLabel: "Saturday, December 06, 2026",
+  time: "6:30 PM onwards",
+  venue: "Hotel Sanara Mandira (Ranasara Hall - Ground Floor)",
+  address: "Makola Road, Kiribathgoda",
+  mapUrl: "https://maps.app.goo.gl/tBtfs5ZNufkGfXm5A?g_st=iw",
+};
+
+const countdownLabels = ["Days", "Hours", "Mins", "Secs"];
+
+function calculateTimeLeft() {
+  const remaining = Math.max(
+    0,
+    new Date(homecoming.dateISO).getTime() - Date.now(),
+  );
+
+  return [
+    Math.floor(remaining / 86400000),
+    Math.floor((remaining / 3600000) % 24),
+    Math.floor((remaining / 60000) % 60),
+    Math.floor((remaining / 1000) % 60),
+  ];
+}
+
+const cardClass = `
+  relative overflow-hidden rounded-[24px]
+  border border-[#c9a44c]/30
+  bg-[linear-gradient(135deg,#300b19_0%,#1b0710_100%)]
+  shadow-[0_18px_50px_rgba(0,0,0,0.25)]
+`;
+
+const serifClass =
+  "[font-family:var(--font-cormorant),Georgia,serif]";
 
 export default function Homecoming() {
+  const [timeLeft, setTimeLeft] = useState([0, 0, 0, 0]);
+
+  useEffect(() => {
+    const update = () => setTimeLeft(calculateTimeLeft());
+
+    update();
+
+    const timer = window.setInterval(update, 1000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
   const calendarUrl = createCalendarUrl(
     createCalendarEvent({
-      uid: "indusha-anjana-homecoming-20261212",
-      start: "20261212T103000Z",
-      end: "20261212T143000Z",
-      summary: "Indusha & Anjana - Homecoming",
-      location: "The Garden Pavilion\\, Colombo\\, Sri Lanka",
-      description: "Join us to celebrate the homecoming of Indusha and Anjana.",
+      uid: "indusha-anjana-homecoming-20261206",
+      start: "20261206T103000Z",
+      end: "20261206T143000Z",
+      summary: `${wedding.bride} & ${wedding.groom} — Homecoming`,
+      location: "Hotel Sanara Mandira (Ranasara Hall - Ground Floor)\\, Makola Road, Kiribathgoda",
+      description: "Join us to celebrate our homecoming.",
     }),
   );
 
   return (
     <section
-      className="
-        homecoming relative overflow-hidden [background:rgb(247_240_229_/_94%)] text-[#583d30] text-center
-        [@media(width<=520px)]:p-[78px_20px] paper [background:transparent]
-      "
       id="homecoming"
+      aria-labelledby="homecoming-heading"
+      className="
+        relative isolate overflow-hidden
+        bg-[#130406] px-4 py-16 text-[#f7eedc]
+        sm:px-6 sm:py-24
+      "
     >
-      <div className="homecoming-inner relative z-[1] max-w-[1000px] mx-auto">
-        <Reveal>
-          <p
-            className="
-        eyebrow
-        [background:radial-gradient(_ellipse_at_center,_rgb(255_251_244_/_85%)_0%,_rgb(255_251_244_/_0%)_70%_)]
-        text-[var(--brown)] [text-shadow:0_2px_12px_rgb(0_0_0_/_50%)] absolute top-[17%] left-[50%] z-[2] m-0
-        p-[18px_60px] [transform:translateX(-50%)] whitespace-nowrap text-[clamp(12px,_1.6vw,_16px)]
-        font-[600] tracking-[0.3em] uppercase
-      "
-          >
-            The Celebration Continues
-          </p>
+      {/* Subtle gold pattern */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-0 -z-10
+          bg-[radial-gradient(circle,rgba(201,164,76,0.13)_1px,transparent_1px)]
+          [background-size:42px_42px]
+        "
+      />
 
-          <div className="homecoming-monogram [font-family:var(--font-cormorant),_Georgia,_serif] italic text-[#a76e50] tracking-[0.08em] m-[24px_0_12px] text-[28px]">
-            I &amp; A
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute inset-0 -z-10
+          bg-[radial-gradient(ellipse_at_top,rgba(110,16,32,0.22),transparent_70%)]
+        "
+      />
+
+      <div className="mx-auto max-w-[560px] space-y-6 sm:space-y-8">
+        {/* Main invitation */}
+        <Reveal
+          className={`${cardClass} px-6 py-10 text-center sm:px-10 sm:py-12`}
+        >
+          <div
+            aria-hidden="true"
+            className="
+              pointer-events-none absolute inset-0 opacity-40
+              bg-[radial-gradient(circle,rgba(201,164,76,0.18)_1px,transparent_1px)]
+              [background-size:16px_16px]
+            "
+          />
+
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="
+                mb-6 flex items-center justify-center
+                gap-4 text-[#c9a44c]
+              "
+            >
+              <span className="h-px w-12 bg-[#c9a44c]/40" />
+              <Sparkles size={20} strokeWidth={1.3} />
+              <span className="h-px w-12 bg-[#c9a44c]/40" />
+            </div>
+
+            <p
+              className="
+                m-0 text-[9px] font-medium uppercase
+                leading-relaxed tracking-[0.25em] text-[#d2b45c]
+                sm:text-[11px] sm:tracking-[0.32em]
+              "
+            >
+              The homecoming reception of
+            </p>
+
+            <h2
+              id="homecoming-heading"
+              className={`
+                mb-0 mt-7 break-words
+                text-[clamp(46px,10vw,72px)]
+                font-semibold uppercase leading-[1.1]
+                tracking-[-0.035em]
+                ${serifClass}
+              `}
+            >
+              <span className="block">{wedding.bride}</span>
+
+              <span
+                className="
+                  my-5 block text-[36px]
+                  font-normal italic leading-none text-[#c9a44c]
+                "
+              >
+                &amp;
+              </span>
+
+              <span className="block">{wedding.groom}</span>
+            </h2>
+
+            <div
+              className="
+                mx-auto mt-8 inline-flex max-w-full
+                items-center justify-center gap-2
+                rounded-full border border-[#c9a44c]/35
+                bg-[#130406]/40 px-4 py-3
+                text-[11px] leading-relaxed text-[#ead8b5]
+                sm:text-xs
+              "
+            >
+              <CalendarDays
+                size={15}
+                aria-hidden="true"
+                className="shrink-0 text-[#c9a44c]"
+              />
+              <span>{homecoming.dateLabel}</span>
+            </div>
+
+            <p
+              className="
+                mb-0 mt-5 flex items-center
+                justify-center gap-2 text-xs text-[#d6bfc2]
+              "
+            >
+              <MapPin
+                size={14}
+                aria-hidden="true"
+                className="shrink-0 text-[#c9a44c]"
+              />
+              {homecoming.venue}
+            </p>
           </div>
-
-          <h2
-            className="
-        homecoming-title m-0 [font-family:var(--font-cormorant),_Georgia,_serif]
-        text-[clamp(2.7rem,_7vw,_5rem)] font-[400] leading-[1.1]
-        [@media(width<=520px)]:text-[clamp(2.5rem,_11vw,_3.5rem)] [&_i]:text-[#a76e50] [&_i]:font-[400]
-      "
-          >
-            The <i>Homecoming</i>
-          </h2>
-
-          <Orn />
-
-          <p
-            className="
-        homecoming-intro max-w-[540px] m-[22px_auto_48px] text-[#806b5c]
-        [font-family:var(--font-cormorant),_Georgia,_serif] text-[21px] leading-[1.8]
-        [@media(width<=520px)]:text-[19px] [@media(width<=520px)]:mb-[32px]
-      "
-          >
-            With joyful hearts, we invite you to join us for another beautiful
-            celebration as we begin this new chapter together.
-          </p>
         </Reveal>
 
-        <div
-          className="
-        homecoming-card grid grid-cols-[minmax(0,_1fr)_auto_minmax(0,_1fr)_auto_minmax(0,_1fr)] items-stretch
-        gap-[25px] p-[42px_30px] [border:1px_solid_#d8c3ad] [background:rgb(255_252_246_/_70%)]
-        [@media(width<=520px)]:grid-cols-[minmax(0,_1fr)] [@media(width<=520px)]:p-[30px_18px]
-        [@media(520px<width<=800px)]:gap-[18px] [@media(520px<width<=800px)]:p-[30px_20px]
-      "
-        >
-          <Reveal
-            className="
-        homecoming-detail flex min-w-0 flex-col items-center gap-[12px] [&_>_svg]:mb-[4px]
-        [&_>_svg]:text-[#a76e50] [&_.eyebrow]:m-0 [&_h3]:m-0
-        [&_h3]:[font-family:var(--font-cormorant),_Georgia,_serif] [&_h3]:text-[clamp(20px,_2.4vw,_27px)]
-        [&_h3]:font-[500] [@media(width<=520px)]:[&_h3]:text-[25px]
-        [@media(width<=520px)]:[&_h3]:[overflow-wrap:anywhere]
-        [@media(520px<width<=800px)]:[&_h3]:[overflow-wrap:anywhere] [&_p]:m-0 [&_p]:text-[#806b5c]
-        [&_p]:text-[14px] [&_p]:leading-[1.7]
-      "
-          >
-            <CalendarDays size={25} strokeWidth={1.3} />
-            <span className="eyebrow1">The Date</span>
-            <h3>Saturday</h3>
-            <p>12 December 2026</p>
-          </Reveal>
-
-          <div
-            className="
-        homecoming-divider w-[1px] [background:#d8c3ad] [@media(width<=520px)]:w-[65px]
-        [@media(width<=520px)]:h-[1px] [@media(width<=520px)]:mx-auto
-      "
-          />
-
-          <Reveal
-            className="
-        homecoming-detail flex min-w-0 flex-col items-center gap-[12px] [&_>_svg]:mb-[4px]
-        [&_>_svg]:text-[#a76e50] [&_.eyebrow]:m-0 [&_h3]:m-0
-        [&_h3]:[font-family:var(--font-cormorant),_Georgia,_serif] [&_h3]:text-[clamp(20px,_2.4vw,_27px)]
-        [&_h3]:font-[500] [@media(width<=520px)]:[&_h3]:text-[25px]
-        [@media(width<=520px)]:[&_h3]:[overflow-wrap:anywhere]
-        [@media(520px<width<=800px)]:[&_h3]:[overflow-wrap:anywhere] [&_p]:m-0 [&_p]:text-[#806b5c]
-        [&_p]:text-[14px] [&_p]:leading-[1.7]
-      "
-          >
-            <span className="homecoming-clock h-[29px] text-[#a76e50] text-[30px] leading-[1]">
-              ◷
-            </span>
-            <span className="eyebrow1">The Time</span>
-            <h3>4:00 PM</h3>
-            <p>Sri Lanka Standard Time</p>
-          </Reveal>
-
-          <div
-            className="
-        homecoming-divider w-[1px] [background:#d8c3ad] [@media(width<=520px)]:w-[65px]
-        [@media(width<=520px)]:h-[1px] [@media(width<=520px)]:mx-auto
-      "
-          />
-
-          <Reveal
-            className="
-        homecoming-detail flex min-w-0 flex-col items-center gap-[12px] [&_>_svg]:mb-[4px]
-        [&_>_svg]:text-[#a76e50] [&_.eyebrow]:m-0 [&_h3]:m-0
-        [&_h3]:[font-family:var(--font-cormorant),_Georgia,_serif] [&_h3]:text-[clamp(20px,_2.4vw,_27px)]
-        [&_h3]:font-[500] [@media(width<=520px)]:[&_h3]:text-[25px]
-        [@media(width<=520px)]:[&_h3]:[overflow-wrap:anywhere]
-        [@media(520px<width<=800px)]:[&_h3]:[overflow-wrap:anywhere] [&_p]:m-0 [&_p]:text-[#806b5c]
-        [&_p]:text-[14px] [&_p]:leading-[1.7]
-      "
-          >
-            <MapPin size={25} strokeWidth={1.3} />
-            <span className="eyebrow1">The Venue</span>
-            <h3>The Garden Pavilion</h3>
-            <p>Colombo, Sri Lanka</p>
-
-            <a
-              href="https://maps.google.com/?q=Colombo,Sri+Lanka"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="homecoming-map text-[#9c6043] text-[12px] [text-decoration:underline] [text-underline-offset:4px]"
-            >
-              View Directions ↗
-            </a>
-          </Reveal>
-        </div>
-
-        <Reveal>
+        {/* Countdown */}
+        <Reveal className={`${cardClass} px-4 py-7 text-center sm:px-8`}>
           <p
             className="
-        homecoming-note max-w-[540px] m-[38px_auto_25px] text-[#806b5c]
-        [font-family:var(--font-cormorant),_Georgia,_serif] text-[20px] italic leading-[1.7]
-      "
+              m-0 text-[9px] uppercase
+              leading-relaxed tracking-[0.18em] text-[#c9a44c]
+              sm:text-[10px]
+            "
           >
-            We would be delighted to celebrate this special occasion with you.
+            ✦ Counting moments until celebration ✦
           </p>
+
+          <div className="mt-5 grid grid-cols-4 gap-2 sm:gap-3">
+            {timeLeft.map((value, index) => (
+              <div
+                key={countdownLabels[index]}
+                className="
+                  rounded-[16px] border border-[#c9a44c]/30
+                  bg-[#130406]/50 px-1 py-4
+                "
+              >
+                <span
+                  className={`
+                    block text-[30px] font-semibold
+                    italic leading-none sm:text-[38px]
+                    ${serifClass}
+                  `}
+                >
+                  {String(value).padStart(2, "0")}
+                </span>
+
+                <span
+                  className="
+                    mt-3 block text-[8px] uppercase
+                    tracking-[0.08em] text-[#cfb775]
+                    sm:text-[9px]
+                  "
+                >
+                  {countdownLabels[index]}
+                </span>
+              </div>
+            ))}
+          </div>
 
           <a
             href={calendarUrl}
             download="indusha-anjana-homecoming.ics"
             className="
-        homecoming-calendar inline-flex max-w-full p-[15px_23px] items-center justify-center gap-[10px]
-        [border:1px_solid_#a76e50] [background:transparent] text-[#704a38] text-[12px] tracking-[0.08em]
-        uppercase [transition:background-color_250ms_ease,_color_250ms_ease]
-        [@media(width<=520px)]:p-[14px_16px] [@media(width<=520px)]:text-[10px]
-        [@media(width<=520px)]:tracking-[0.04em] [&:hover]:[background:#8d6048] [&:hover]:text-[#fffaf3]
-      "
+              mt-5 inline-flex min-h-11
+              items-center justify-center gap-2
+              rounded px-2 text-[10px] uppercase
+              tracking-[0.12em] text-[#d2b45c]
+              transition-colors hover:text-[#f7eedc]
+              focus-visible:outline focus-visible:outline-2
+              focus-visible:outline-offset-4
+              focus-visible:outline-[#c9a44c]
+            "
           >
-            <CalendarDays size={18} />
-            Add Homecoming to Calendar
+            <CalendarDays size={15} aria-hidden="true" />
+            Add to Calendar
+            <ArrowUpRight size={14} aria-hidden="true" />
           </a>
         </Reveal>
 
-        <div className="homecoming-bottom-mark [font-family:var(--font-cormorant),_Georgia,_serif] italic text-[#a76e50] tracking-[0.08em] mt-[45px] text-[22px]">
-          I &amp; A
-        </div>
+        {/* Invitation wording */}
+        <Reveal className={`${cardClass} px-6 py-9 text-center sm:px-10`}>
+          <div
+            aria-hidden="true"
+            className="
+              mx-auto mb-5 flex size-10
+              items-center justify-center rounded-full
+              border border-[#c9a44c]/30
+              bg-[#6e1020]/35 text-[#c9a44c]
+            "
+          >
+            <Heart size={17} strokeWidth={1.4} />
+          </div>
+
+          <h3 className={`m-0 text-[30px] font-normal ${serifClass}`}>
+            With Joyful Hearts
+          </h3>
+
+          <div
+            className={`
+              mt-5 space-y-3 text-lg
+              leading-relaxed text-[#ead8d4]
+              ${serifClass}
+            `}
+          >
+            <p className="m-0">{wedding.parents.bride[0]}</p>
+
+            <p className="m-0 text-sm italic text-[#c9a44c]">
+              together with
+            </p>
+
+            <p className="m-0">{wedding.parents.groom[0]}</p>
+          </div>
+
+          <div
+            aria-hidden="true"
+            className="mx-auto my-6 h-px w-14 bg-[#c9a44c]/35"
+          />
+
+          <p className="m-0 text-[13px] leading-7 text-[#cdb5ba]">
+            Request the honour of your presence to celebrate
+            the homecoming of their beloved children.
+            Join us for an evening of love, laughter,
+            and beautiful beginnings.
+          </p>
+        </Reveal>
+
+        {/* Reception details */}
+        <Reveal className={`${cardClass} px-6 py-9 sm:px-9`}>
+          <p
+            className="
+              m-0 text-center text-[9px] uppercase
+              tracking-[0.25em] text-[#c9a44c]
+            "
+          >
+            The celebration
+          </p>
+
+          <h3
+            className={`
+              mb-7 mt-3 text-center text-[32px]
+              font-normal leading-tight ${serifClass}
+            `}
+          >
+            Homecoming Reception
+          </h3>
+
+          <div className="space-y-5">
+            <div className="flex items-start gap-4">
+              <CalendarDays
+                size={19}
+                strokeWidth={1.3}
+                aria-hidden="true"
+                className="mt-1 shrink-0 text-[#c9a44c]"
+              />
+
+              <div>
+                <p className="m-0 text-[9px] uppercase tracking-[0.18em] text-[#c9a44c]">
+                  The date
+                </p>
+                <p className={`mb-0 mt-1 text-xl ${serifClass}`}>
+                  {homecoming.dateLabel}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <Clock3
+                size={19}
+                strokeWidth={1.3}
+                aria-hidden="true"
+                className="mt-1 shrink-0 text-[#c9a44c]"
+              />
+
+              <div>
+                <p className="m-0 text-[9px] uppercase tracking-[0.18em] text-[#c9a44c]">
+                  The time
+                </p>
+                <p className={`mb-0 mt-1 text-xl ${serifClass}`}>
+                  {homecoming.time}
+                </p>
+                <p className="mb-0 mt-1 text-[11px] text-[#cdb5ba]">
+                  Sri Lanka Standard Time
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <MapPin
+                size={19}
+                strokeWidth={1.3}
+                aria-hidden="true"
+                className="mt-1 shrink-0 text-[#c9a44c]"
+              />
+
+              <div>
+                <p className="m-0 text-[9px] uppercase tracking-[0.18em] text-[#c9a44c]">
+                  The venue
+                </p>
+                <p className={`mb-0 mt-1 text-xl ${serifClass}`}>
+                  {homecoming.venue}
+                </p>
+                <p className="mb-0 mt-1 text-[11px] text-[#cdb5ba]">
+                  {homecoming.address}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <a
+            href={homecoming.mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              mt-8 flex min-h-12 items-center
+              justify-center gap-2 rounded-full
+              border border-[#c9a44c]/50
+              bg-[#c9a44c]/10 px-5 py-3
+              text-[10px] uppercase tracking-[0.15em]
+              text-[#d2b45c] transition-colors
+              hover:bg-[#c9a44c]/20
+              focus-visible:outline focus-visible:outline-2
+              focus-visible:outline-offset-4
+              focus-visible:outline-[#c9a44c]
+            "
+          >
+            Get Directions
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
+        </Reveal>
+
+        {/* Closing signature */}
+        <Reveal className="px-4 pb-2 pt-5 text-center">
+          <p
+            className={`
+              m-0 text-[32px] italic text-[#ead8b5]
+              ${serifClass}
+            `}
+          >
+            {wedding.bride} &amp; {wedding.groom}
+          </p>
+
+          <p
+            className="
+              mb-0 mt-3 text-[9px] uppercase
+              tracking-[0.3em] text-[#c9a44c]
+            "
+          >
+            With love &amp; gratitude
+          </p>
+        </Reveal>
       </div>
     </section>
   );
