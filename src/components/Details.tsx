@@ -1,11 +1,11 @@
 import {
   CalendarDays,
-  Church,
   Download,
+  Heart,
   HeartHandshake,
-  Music2,
+  ScrollText,
+  Sparkles,
   Utensils,
-  Wine,
 } from "lucide-react";
 
 import Reveal from "@/components/ui/Reveal";
@@ -13,20 +13,18 @@ import { createCalendarEvent, createCalendarUrl } from "@/lib/calendar";
 import { wedding } from "@/lib/wedding";
 
 const eventIcons = [
-  Church,         // Ceremony
-  Wine,           // Aperitivo
-  Utensils,       // Reception
-  Music2,         // First dance
-  Utensils,       // Dinner & party
+  Heart,          // Wedding ceremony
+  Sparkles,       // Poruwa ceremony
+  ScrollText,     // Marriage registration
+  Utensils,       // Reception and lunch
   HeartHandshake, // Farewell
 ];
 
 const eventAnimations = [
   "wedding-float 3s ease-in-out infinite",
+  "wedding-heartbeat 2.8s ease-in-out infinite",
   "wedding-sway 2.5s ease-in-out infinite",
-  "wedding-float 3s ease-in-out infinite",
   "wedding-dance 2s ease-in-out infinite",
-  "wedding-sway 2.5s ease-in-out infinite",
   "wedding-heartbeat 2.8s ease-in-out infinite",
 ];
 
@@ -34,8 +32,8 @@ export default function Details() {
   const weddingCalendarUrl = createCalendarUrl(
     createCalendarEvent({
       uid: "indusha-anjana-wedding-20261203",
-      start: "20261203T043000Z",
-      end: "20261203T163000Z",
+      start: "20261203T040000Z",
+      end: "20261203T100000Z",
       summary: `${wedding.bride} & ${wedding.groom} Wedding`,
     }),
   );
@@ -48,9 +46,9 @@ export default function Details() {
         relative isolate overflow-hidden
         px-5 py-20 text-[#3d2b24]
         sm:px-8 sm:py-24 lg:py-28
+        motion-reduce:[&_.wedding-moving-icon]:![animation:none]
       "
     >
-      {/* Soft wash over the existing autumn background */}
       <div
         aria-hidden="true"
         className="
@@ -60,7 +58,6 @@ export default function Details() {
       />
 
       <div className="mx-auto max-w-4xl">
-        {/* Heading */}
         <Reveal>
           <header className="text-center">
             <p
@@ -110,8 +107,7 @@ export default function Details() {
           </header>
         </Reveal>
 
-        {/* Schedule */}
-        <ol className="relative mb-0 mt-14 list-none p-0 sm:mt-20">
+        <div className="relative mt-14 sm:mt-20">
           {/* Continuous timeline */}
           <div
             aria-hidden="true"
@@ -124,116 +120,113 @@ export default function Details() {
             "
           />
 
-          {wedding.events.map((event, index) => {
-            const EventIcon = eventIcons[index % eventIcons.length];
-            const isLeft = index % 2 === 0;
+          <ol className="relative m-0 list-none p-0">
+            {wedding.events.map((event, index) => {
+              const EventIcon = eventIcons[index % eventIcons.length];
+              const isLeft = index % 2 === 0;
 
-            return (
-              <li
-                key={`${event.title}-${event.time}`}
-                className="relative pb-10 last:pb-0 md:pb-8"
-              >
-                <Reveal>
-                  <div
-                    className="
-                      grid grid-cols-[48px_minmax(0,1fr)]
-                      items-start gap-x-5
-                      md:grid-cols-[minmax(0,1fr)_64px_minmax(0,1fr)]
-                      md:gap-x-8
-                    "
-                  >
-{/* Animated timeline marker */}
-<div
-  aria-hidden="true"
-  className="
-    relative z-10 col-start-1 row-start-1
-    flex size-12 items-center justify-center
-    rounded-full border border-[#d9b99b]
-    bg-[#fffaf2] text-[#8d4937]
-    shadow-[0_0_0_7px_rgba(255,250,242,0.7)]
-    md:col-start-2 md:mx-auto
-  "
->
-  <EventIcon
-    size={21}
-    strokeWidth={1.35}
-    className="wedding-moving-icon"
-    style={{
-      animation: eventAnimations[index % eventAnimations.length],
-      animationDelay: `${index * -0.4}s`,
-      transformOrigin: "center",
-      transformBox: "fill-box",
-    }}
-  />
-</div>
-
-                    {/* Event information */}
-                    <article
-                      className={`
-                        col-start-2 row-start-1 min-w-0
-                        pb-2 text-left
-                        ${
-                          isLeft
-                            ? "md:col-start-1 md:text-right"
-                            : "md:col-start-3"
-                        }
-                      `}
+              return (
+                <li
+                  key={`${event.title}-${event.time}`}
+                  className="relative pb-10 last:pb-0 md:pb-8"
+                >
+                  <Reveal>
+                    <div
+                      className="
+                        grid grid-cols-[48px_minmax(0,1fr)]
+                        items-start gap-x-5
+                        md:grid-cols-[minmax(0,1fr)_64px_minmax(0,1fr)]
+                        md:gap-x-8
+                      "
                     >
-                      <p
-                        className="
-                          m-0 text-[30px] font-medium
-                          leading-none tracking-[-0.025em]
-                          text-[#8d4937]
-                          [font-family:var(--font-cormorant),serif]
-                          sm:text-[36px]
-                        "
-                      >
-                        {event.time}
-                      </p>
-
-                      <h3
-                        className="
-                          mb-0 mt-3 text-[23px]
-                          font-medium leading-tight text-[#3d2b24]
-                          [font-family:var(--font-cormorant),serif]
-                          sm:text-[28px]
-                        "
-                      >
-                        {event.title}
-                      </h3>
-
-                      <span
+                      {/* Animated timeline marker */}
+                      <div
                         aria-hidden="true"
+                        className="
+                          relative z-10 col-start-1 row-start-1
+                          flex size-12 items-center justify-center
+                          rounded-full border border-[#d9b99b]
+                          bg-[#fffaf2] text-[#8d4937]
+                          shadow-[0_0_0_7px_rgba(255,250,242,0.7)]
+                          md:col-start-2 md:mx-auto
+                        "
+                      >
+                        <EventIcon
+                          size={21}
+                          strokeWidth={1.35}
+                          className="wedding-moving-icon"
+                          style={{
+                            animation:
+                              eventAnimations[index % eventAnimations.length],
+                            animationDelay: `${index * -0.4}s`,
+                            transformOrigin: "center",
+                            transformBox: "fill-box",
+                          }}
+                        />
+                      </div>
+
+                      {/* Event information */}
+                      <article
                         className={`
-                          my-4 block h-px w-9 bg-[#b96f52]/45
-                          ${isLeft ? "md:ml-auto" : ""}
+                          col-start-2 row-start-1 min-w-0
+                          pb-2 text-left
+                          ${
+                            isLeft
+                              ? "md:col-start-1 md:text-right"
+                              : "md:col-start-3"
+                          }
                         `}
-                      />
-
-                      <p className="m-0 text-sm leading-relaxed text-[#5f4b40]">
-                        {event.place}
-                      </p>
-
-                      {event.address && (
+                      >
                         <p
                           className="
-                            mb-0 mt-1.5 text-xs
-                            leading-relaxed text-[#77665d]
-                            sm:text-[13px]
+                            m-0 text-[30px] font-medium
+                            leading-none tracking-[-0.025em]
+                            text-[#8d4937]
+                            [font-family:var(--font-cormorant),serif]
+                            sm:text-[36px]
                           "
                         >
-                          {event.address}
+                          {event.time}
                         </p>
-                      )}
-                    </article>
-                  </div>
-                </Reveal>
-              </li>
-            );
-          })}
-        </ol>
 
-        {/* Calendar */}
+                        <h3
+                          className="
+                            mb-0 mt-3 text-[23px]
+                            font-medium leading-tight text-[#3d2b24]
+                            [font-family:var(--font-cormorant),serif]
+                            sm:text-[28px]
+                          "
+                        >
+                          {event.title}
+                        </h3>
+
+                        <span
+                          aria-hidden="true"
+                          className={`
+                            my-4 block h-px w-9 bg-[#b96f52]/45
+                            ${isLeft ? "md:ml-auto" : ""}
+                          `}
+                        />
+
+                        {event.address && (
+                          <p
+                            className="
+                              m-0 text-xs leading-relaxed
+                              text-[#77665d] sm:text-[13px]
+                            "
+                          >
+                            {event.address}
+                          </p>
+                        )}
+                      </article>
+                    </div>
+                  </Reveal>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+
         <Reveal className="mt-14 text-center sm:mt-16">
           <p
             className="
@@ -261,19 +254,11 @@ export default function Details() {
               focus-visible:outline-[#8d4937]
             "
           >
-            <CalendarDays
-              size={18}
-              strokeWidth={1.5}
-              aria-hidden="true"
-            />
+            <CalendarDays size={18} strokeWidth={1.5} aria-hidden="true" />
 
             <span>Add to Calendar</span>
 
-            <Download
-              size={15}
-              strokeWidth={1.5}
-              aria-hidden="true"
-            />
+            <Download size={15} strokeWidth={1.5} aria-hidden="true" />
           </a>
         </Reveal>
       </div>

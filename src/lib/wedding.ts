@@ -44,49 +44,38 @@
     signature: "From one search to forever.",
   },
 
-  events: [
-    {
-      time: "10:00 AM",
-      title: "Wedding Ceremony",
-      place: "The Grand Garden",
-      address: "Colombo, Sri Lanka",
-    },
-    {
-      time: "12:00 PM",
-      title: "Aperitivo",
-      place: "The Grand Garden",
-      address: "Drinks, photographs and time together.",
-    },
-    {
-      time: "1:00 PM",
-      title: "Wedding Reception",
-      place: "The Garden Pavilion",
-      address: "Colombo, Sri Lanka",
-    },
-    {
-      time: "7:00 PM",
-      title: "First Dance",
-      place: "The Garden Pavilion",
-      address: "An evening of music and celebration.",
-    },
-    {
-      time: "8:00 PM",
-      title: "Dinner & Party",
-      place: "The Garden Pavilion",
-      address: "Colombo, Sri Lanka",
-    },
-    {
-      time: "10:00 PM",
-      title: "Farewell",
-      place: "The Garden Pavilion",
-      address: "Colombo, Sri Lanka",
-    }
-  ],
+events: [
+  {
+    time: "9:30 AM",
+    title: "Wedding Ceremony Begins",
+    address: "Join us as we begin our special day.",
+  },
+  {
+    time: "9:58 AM",
+    title: "Poruwa Ceremony",
+    address: "Traditional blessings as we begin our journey together.",
+  },
+  {
+    time: "10:51 AM",
+    title: "Marriage Registration",
+    address: "Making our forever official.",
+  },
+  {
+    time: "11:00 AM",
+    title: "Reception & Lunch",
+    address: "Join us for lunch, laughter and celebration.",
+  },
+  {
+    time: "3:30 PM",
+    title: "Farewell",
+    address: "With love and thanks for sharing our special day.",
+  },
+],
 
   gallery: [
     "/images/g1.jpeg",
-    "/images/g2.jpeg",
-    "/images/g3.jpeg",
+    "/images/g4.jpeg",
+    "/images/g5.jpeg",
   ],
 
   ceremony: {

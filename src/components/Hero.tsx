@@ -1,5 +1,4 @@
 import Image from "next/image";
-
 import Reveal from "@/components/ui/Reveal";
 import { wedding } from "@/lib/wedding";
 
@@ -299,7 +298,7 @@ export default function Hero() {
               "
             >
               <Image
-                src="/images/hero1.jpeg"
+                src="/images/hero2.jpeg"
                 alt={`${wedding.bride} and ${wedding.groom} together`}
                 fill
                 priority
