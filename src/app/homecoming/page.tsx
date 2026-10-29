@@ -68,7 +68,7 @@ export default function Homecoming() {
       start: "20261206T103000Z",
       end: "20261206T143000Z",
       summary: `${wedding.bride} & ${wedding.groom} — Homecoming`,
-      location: "Hotel Sanara Mandira (Ranasara Hall - Ground Floor)\\, Makola Road, Kiribathgoda",
+      location: "Hotel Sanara Mandira (Ranasara Hall - Ground Floor), Makola Road, Kiribathgoda",
       description: "Join us to celebrate our homecoming.",
     }),
   );
